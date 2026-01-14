@@ -28,10 +28,11 @@ export function Account({ onNavigate }: NavigationProps): React.JSX.Element {
     );
   }
 
-  const initials = [user.firstName?.[0], user.lastName?.[0]]
-    .filter(Boolean)
-    .join('')
-    .toUpperCase() || user.email[0].toUpperCase();
+  const initials =
+    [user.firstName?.[0], user.lastName?.[0]]
+      .filter(Boolean)
+      .join('')
+      .toUpperCase() || user.email[0].toUpperCase();
 
   return (
     <View style={styles.container}>

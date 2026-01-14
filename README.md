@@ -57,11 +57,13 @@ install();
 ### 3. Configure WorkOS
 
 1. Copy the environment template:
+
    ```bash
    cp .env.example .env
    ```
 
 2. Add your WorkOS Client ID to `.env`:
+
    ```
    EXPO_PUBLIC_WORKOS_CLIENT_ID=client_XXXXXXXXX
    ```
@@ -74,6 +76,7 @@ install();
 ### 4. Create a Development Build
 
 **Important:** A development build is required for two reasons:
+
 1. Expo Go cannot handle custom URL schemes for OAuth callbacks
 2. The `react-native-quick-crypto` polyfill requires native code compilation
 
@@ -127,31 +130,32 @@ expo-authkit-example/
 
 ### Key Security Features
 
-| Feature | Implementation |
-|---------|----------------|
+| Feature          | Implementation                                             |
+| ---------------- | ---------------------------------------------------------- |
 | No client secret | PKCE flow via WorkOS SDK's `getAuthorizationUrlWithPKCE()` |
-| Secure storage | Expo SecureStore (Keychain/Keystore) |
-| Token refresh | WorkOS SDK's `authenticateWithRefreshToken()` |
-| CSRF protection | State parameter in OAuth flow |
-| Native crypto | `react-native-quick-crypto` (C++/JSI, not JS) |
+| Secure storage   | Expo SecureStore (Keychain/Keystore)                       |
+| Token refresh    | WorkOS SDK's `authenticateWithRefreshToken()`              |
+| CSRF protection  | State parameter in OAuth flow                              |
+| Native crypto    | `react-native-quick-crypto` (C++/JSI, not JS)              |
 
 ## Comparison with Electron Example
 
 This example mirrors the [electron-authkit-example](../electron-authkit-example) architecture:
 
-| Electron | Expo |
-|----------|------|
-| `electron-store` | `expo-secure-store` |
-| `shell.openExternal()` | `WebBrowser.openAuthSessionAsync()` |
-| Protocol handlers | `expo-linking` deep links |
-| IPC for auth | Direct function calls |
-| Native Node.js crypto | `react-native-quick-crypto` polyfill |
+| Electron               | Expo                                 |
+| ---------------------- | ------------------------------------ |
+| `electron-store`       | `expo-secure-store`                  |
+| `shell.openExternal()` | `WebBrowser.openAuthSessionAsync()`  |
+| Protocol handlers      | `expo-linking` deep links            |
+| IPC for auth           | Direct function calls                |
+| Native Node.js crypto  | `react-native-quick-crypto` polyfill |
 
 ## Troubleshooting
 
 ### "ReferenceError: Property 'crypto' doesn't exist" or "Cannot read property 'digest' of undefined"
 
 The WebCrypto polyfill isn't loading. Check:
+
 1. `react-native-quick-crypto` is installed
 2. The polyfill import is the **FIRST** line in your entry file (before any other imports)
 3. You've done a native rebuild after installing (`npx expo run:ios`)
@@ -169,6 +173,7 @@ import './src/polyfills'; // Too late!
 ### "Invariant Violation: Linking requires a build-time setting scheme"
 
 You need a development build. Expo Go doesn't support custom schemes or native modules:
+
 ```bash
 npx expo run:ios  # or run:android
 ```
@@ -182,6 +187,7 @@ npx expo run:ios  # or run:android
 ### Auth state not updating across components
 
 If signing in doesn't update all components (e.g., header button still shows "Sign In"):
+
 - Ensure all components use `useAuth()` from the same context
 - The app must be wrapped in `<AuthProvider>` (see `App.tsx`)
 

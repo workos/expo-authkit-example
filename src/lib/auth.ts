@@ -69,10 +69,11 @@ interface PkceState {
  * The WorkOS SDK handles PKCE generation automatically via getAuthorizationUrlWithPKCE.
  */
 export async function getSignInUrl(): Promise<string> {
-  const { url, codeVerifier } = await workos.userManagement.getAuthorizationUrlWithPKCE({
-    redirectUri: REDIRECT_URI,
-    provider: 'authkit',
-  });
+  const { url, codeVerifier } =
+    await workos.userManagement.getAuthorizationUrlWithPKCE({
+      redirectUri: REDIRECT_URI,
+      provider: 'authkit',
+    });
 
   // Store code verifier securely - needed for token exchange
   const pkceState: PkceState = {
@@ -145,9 +146,10 @@ export async function getUser(): Promise<User | null> {
 
   if (isExpired) {
     try {
-      const refreshed = await workos.userManagement.authenticateWithRefreshToken({
-        refreshToken: session.refreshToken,
-      });
+      const refreshed =
+        await workos.userManagement.authenticateWithRefreshToken({
+          refreshToken: session.refreshToken,
+        });
 
       const newSession: StoredSession = {
         accessToken: refreshed.accessToken,

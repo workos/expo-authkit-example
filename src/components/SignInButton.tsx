@@ -14,22 +14,14 @@ export function SignInButton({ large }: SignInButtonProps): React.JSX.Element {
 
   if (user) {
     return (
-      <Button
-        mode="outlined"
-        onPress={signOut}
-        compact={!large}
-      >
+      <Button mode="outlined" onPress={signOut} compact={!large}>
         Sign Out
       </Button>
     );
   }
 
   return (
-    <Button
-      mode="contained"
-      onPress={signIn}
-      compact={!large}
-    >
+    <Button mode="contained" onPress={signIn} compact={!large}>
       {large ? 'Sign In with AuthKit' : 'Sign In'}
     </Button>
   );

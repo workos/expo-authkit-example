@@ -42,10 +42,7 @@ function AppContent(): React.JSX.Element {
     <SafeAreaView style={styles.safeArea}>
       <Surface style={styles.container}>
         <Appbar.Header>
-          <Appbar.Action
-            icon="home"
-            onPress={() => setCurrentView('home')}
-          />
+          <Appbar.Action icon="home" onPress={() => setCurrentView('home')} />
           <Appbar.Action
             icon="account"
             onPress={() => setCurrentView('account')}

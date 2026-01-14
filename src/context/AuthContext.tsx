@@ -1,4 +1,11 @@
-import { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from 'react';
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useCallback,
+  type ReactNode,
+} from 'react';
 import * as WebBrowser from 'expo-web-browser';
 import * as Linking from 'expo-linking';
 import {
@@ -32,7 +39,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     getUser()
       .then(setUser)
-      .catch((error) => {
+      .catch(error => {
         console.error('Failed to load stored session:', error);
       })
       .finally(() => setLoading(false));
@@ -46,7 +53,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
       const error = parsed.queryParams?.error as string | undefined;
       if (error) {
-        console.error('OAuth error:', error, parsed.queryParams?.error_description);
+        console.error(
+          'OAuth error:',
+          error,
+          parsed.queryParams?.error_description,
+        );
         return;
       }
 
@@ -68,14 +79,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     };
 
     const subscription = Linking.addEventListener('url', handleUrl);
-    Linking.getInitialURL().then((url) => {
+    Linking.getInitialURL().then(url => {
       if (url) handleUrl({ url });
     });
 
     return () => subscription.remove();
   }, []);
 
-  const signIn = useCallback(async (): Promise<{ success: boolean; error?: string }> => {
+  const signIn = useCallback(async (): Promise<{
+    success: boolean;
+    error?: string;
+  }> => {
     try {
       console.log('[Auth] Starting sign in...');
       setLoading(true);
@@ -115,7 +129,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
-  const signOut = useCallback(async (): Promise<{ success: boolean; error?: string }> => {
+  const signOut = useCallback(async (): Promise<{
+    success: boolean;
+    error?: string;
+  }> => {
     try {
       const sessionId = await getSessionId();
       await clearSession();
