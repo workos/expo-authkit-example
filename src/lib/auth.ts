@@ -36,6 +36,23 @@ export interface User {
   profilePictureUrl: string | null;
 }
 
+/** Map WorkOS user response to our User type */
+function toUser(workosUser: {
+  id: string;
+  email: string;
+  firstName?: string | null;
+  lastName?: string | null;
+  profilePictureUrl?: string | null;
+}): User {
+  return {
+    id: workosUser.id,
+    email: workosUser.email,
+    firstName: workosUser.firstName ?? null,
+    lastName: workosUser.lastName ?? null,
+    profilePictureUrl: workosUser.profilePictureUrl ?? null,
+  };
+}
+
 interface StoredSession {
   accessToken: string;
   refreshToken: string;
@@ -95,13 +112,7 @@ export async function handleCallback(code: string): Promise<User> {
   const session: StoredSession = {
     accessToken: auth.accessToken,
     refreshToken: auth.refreshToken,
-    user: {
-      id: auth.user.id,
-      email: auth.user.email,
-      firstName: auth.user.firstName ?? null,
-      lastName: auth.user.lastName ?? null,
-      profilePictureUrl: auth.user.profilePictureUrl ?? null,
-    },
+    user: toUser(auth.user),
   };
   await SecureStore.setItemAsync(KEYS.SESSION, JSON.stringify(session));
 
@@ -141,13 +152,7 @@ export async function getUser(): Promise<User | null> {
       const newSession: StoredSession = {
         accessToken: refreshed.accessToken,
         refreshToken: refreshed.refreshToken,
-        user: {
-          id: refreshed.user.id,
-          email: refreshed.user.email,
-          firstName: refreshed.user.firstName ?? null,
-          lastName: refreshed.user.lastName ?? null,
-          profilePictureUrl: refreshed.user.profilePictureUrl ?? null,
-        },
+        user: toUser(refreshed.user),
       };
       await SecureStore.setItemAsync(KEYS.SESSION, JSON.stringify(newSession));
       return newSession.user;

@@ -1,10 +1,6 @@
-/**
- * Home view component.
- * Shows welcome message and sign in prompt for unauthenticated users.
- */
 import { View, StyleSheet } from 'react-native';
 import { Text, Card } from 'react-native-paper';
-import { useAuth } from '../hooks/useAuth';
+import { useAuth } from '../context/AuthContext';
 import { SignInButton } from './SignInButton';
 
 export function Home(): React.JSX.Element {

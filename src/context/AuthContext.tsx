@@ -1,9 +1,3 @@
-/**
- * Auth context for sharing authentication state across components.
- *
- * This solves the issue where multiple useAuth() calls create separate
- * state instances that don't sync with each other.
- */
 import { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from 'react';
 import * as WebBrowser from 'expo-web-browser';
 import * as Linking from 'expo-linking';
@@ -92,7 +86,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       console.log('[Auth] WebBrowser result:', result.type);
 
       if (result.type !== 'success' || !result.url) {
-        setLoading(false);
         return { success: false, error: 'Authentication was cancelled' };
       }
 
@@ -100,14 +93,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
       const error = parsed.queryParams?.error as string | undefined;
       if (error) {
-        setLoading(false);
         const errorDesc = parsed.queryParams?.error_description as string;
         return { success: false, error: errorDesc || error };
       }
 
       const code = parsed.queryParams?.code as string | undefined;
       if (!code) {
-        setLoading(false);
         return { success: false, error: 'No authorization code received' };
       }
 
@@ -115,12 +106,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const newUser = await handleCallback(code);
       console.log('[Auth] Got user:', newUser.email);
       setUser(newUser);
-      setLoading(false);
       return { success: true };
     } catch (error) {
       console.error('[Auth] Sign in failed:', error);
-      setLoading(false);
       return { success: false, error: String(error) };
+    } finally {
+      setLoading(false);
     }
   }, []);
 

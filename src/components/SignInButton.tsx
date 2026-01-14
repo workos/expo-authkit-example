@@ -1,9 +1,5 @@
-/**
- * Sign in/out button component.
- * Mirrors electron-authkit-example's SignInButton.tsx
- */
 import { Button, ActivityIndicator } from 'react-native-paper';
-import { useAuth } from '../hooks/useAuth';
+import { useAuth } from '../context/AuthContext';
 
 interface SignInButtonProps {
   large?: boolean;

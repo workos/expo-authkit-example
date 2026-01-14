@@ -1,13 +1,3 @@
-/**
- * Main App component.
- *
- * This mirrors the electron-authkit-example's App.tsx pattern:
- * - State-based navigation between views (Home, Account)
- * - Header with navigation buttons and sign in/out
- * - Footer with WorkOS branding
- *
- * Uses React Native Paper for UI components (similar to Radix in Electron).
- */
 import { useState } from 'react';
 import { View, StyleSheet, useColorScheme } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';

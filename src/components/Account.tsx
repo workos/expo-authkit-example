@@ -1,16 +1,9 @@
-/**
- * Account view component.
- * Shows user profile details when authenticated.
- */
 import { View, StyleSheet } from 'react-native';
 import { Text, Card, Avatar, Button, Divider } from 'react-native-paper';
-import { useAuth } from '../hooks/useAuth';
+import { useAuth } from '../context/AuthContext';
+import type { NavigationProps } from '../types';
 
-interface AccountProps {
-  onNavigate: (view: 'home' | 'account') => void;
-}
-
-export function Account({ onNavigate }: AccountProps): React.JSX.Element {
+export function Account({ onNavigate }: NavigationProps): React.JSX.Element {
   const { user, signOut } = useAuth();
 
   if (!user) {
