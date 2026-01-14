@@ -2,6 +2,8 @@
 
 A React Native Expo example demonstrating secure authentication with WorkOS AuthKit using PKCE (Proof Key for Code Exchange).
 
+https://github.com/user-attachments/assets/08fa87b3-4b8c-43be-8a70-f85c0ffb23c8
+
 ## Features
 
 - 🔐 **Secure PKCE Authentication** - No client secrets in the app
