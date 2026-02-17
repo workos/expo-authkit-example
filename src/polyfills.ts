@@ -1,4 +1,8 @@
-import { install } from 'react-native-quick-crypto';
+import { polyfillWebCrypto } from 'expo-standard-web-crypto';
+import { digest } from 'expo-crypto';
 
-// Polyfill global.crypto with native implementation for WorkOS SDK
-install();
+polyfillWebCrypto();
+
+if (!globalThis.crypto.subtle) {
+  globalThis.crypto.subtle = { digest } as SubtleCrypto;
+}
